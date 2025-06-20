@@ -18,7 +18,11 @@ main {
         border-radius: 100%;
         line-height: 30vh;
         text-align: center;
-        border: 2px dotted black;
+        border: 2px dashed black;
+        &.drophover {
+            border-color: blue;
+            color: blue;
+        }
     }
 }
 #more-info {
