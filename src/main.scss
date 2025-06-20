@@ -1,0 +1,26 @@
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    font-family: "Jura", sans-serif;
+}
+header {
+    text-align: center;
+}
+main {
+    height: 60vh;
+    display: flex;
+}
+main span {
+    margin: auto;
+    width: 30vh;
+    height: 30vh;
+    border-radius: 100%;
+    line-height: 30vh;
+    text-align: center;
+    border: 2px dotted black;
+}
+#more-info {
+    padding: 20px;
+}
