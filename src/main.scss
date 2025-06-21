@@ -23,6 +23,24 @@ main {
             border-color: blue;
             color: blue;
         }
+        &.error {
+            border-color: red;
+            color: red;
+            animation: errorshake 0.3s ease-in-out 1;
+        }
+    }
+}
+@keyframes errorshake {
+    from,
+    to {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(-5px);
+    }
+    25%,
+    75% {
+        transform: translateX(5px);
     }
 }
 #more-info {
