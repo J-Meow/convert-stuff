@@ -2,6 +2,21 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <style>
+            /* Not in main.scss so it'll load faster */
+            html {
+                animation: fadein 0.8s ease-in;
+            }
+            @keyframes fadein {
+                from,
+                50% {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+        </style>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Convert Stuff</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
