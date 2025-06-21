@@ -49,3 +49,42 @@ main {
 #more-info {
     padding: 20px;
 }
+html.popup-show {
+    overflow: hidden;
+    background-color: #555;
+    header,
+    main,
+    .more-info {
+        opacity: 0.3;
+        pointer-events: none;
+        filter: blur(5px);
+    }
+    #convert-popup {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: all;
+    }
+}
+#convert-popup {
+    opacity: 0;
+    transform: translateY(20%);
+    pointer-events: none;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background: white;
+    height: 95%;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    padding: 20px;
+    transition: opacity ease-out 0.3s, transform ease-out 0.3s;
+}
+header,
+main,
+.more-info {
+    transition: opacity ease-out 0.3s, filter ease-out 0.3s;
+}
+html {
+    transition: background-color ease-out 0.3s;
+}

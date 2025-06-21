@@ -19,7 +19,8 @@ function handleFile(file: File) {
     const mimeType = file.type
     switch (mimeType + "_" + extension) {
         case "image/png_png":
-            dropError("WIP")
+            document.documentElement.classList.add("popup-show")
+            ;(document.querySelector("#filename") as HTMLSpanElement).innerText = file.name
             break
 
         default:
