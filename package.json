@@ -10,5 +10,8 @@
         "sass-embedded": "^1.89.2",
         "typescript": "^5.2.2",
         "vite": "^5.2.0"
+    },
+    "dependencies": {
+        "jimp": "^1.6.0"
     }
 }

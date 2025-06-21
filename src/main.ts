@@ -1,4 +1,6 @@
 import "./main.scss"
+import { Jimp } from "jimp"
+
 function dropError(msg: string) {
     document.querySelector("#droptarget")!.innerHTML = msg
     document.querySelector("#droptarget")!.classList.add("error")
@@ -13,6 +15,11 @@ function dropError(msg: string) {
 function convertPNG(file: File) {
     const objectURL = URL.createObjectURL(file)
     ;(document.querySelector("#convert-png .imagepreview") as HTMLImageElement).src = objectURL
+    document.querySelector("#convert-png .to-jpg")?.addEventListener("click", async () => {
+        const image = await Jimp.read(objectURL)
+        const outputObjURL = URL.createObjectURL(new Blob([await image.getBuffer("image/jpeg")]))
+        open(outputObjURL)
+    })
 }
 function handleFile(file: File) {
     console.log(file)
