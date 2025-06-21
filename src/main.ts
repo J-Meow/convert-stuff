@@ -10,17 +10,25 @@ function dropError(msg: string) {
         }
     }, 1000)
 }
+function convertPNG(file: File) {
+    const objectURL = URL.createObjectURL(file)
+    ;(document.querySelector("#convert-png .imagepreview") as HTMLImageElement).src = objectURL
+}
 function handleFile(file: File) {
     console.log(file)
     const extension = file.name.split(".").pop()!
     if (!extension) {
         dropError("Unsupported file type")
     }
+    function validFile() {
+        document.documentElement.classList.add("popup-show")
+        ;(document.querySelector("#filename") as HTMLSpanElement).innerText = file.name
+    }
     const mimeType = file.type
     switch (mimeType + "_" + extension) {
         case "image/png_png":
-            document.documentElement.classList.add("popup-show")
-            ;(document.querySelector("#filename") as HTMLSpanElement).innerText = file.name
+            validFile()
+            convertPNG(file)
             break
 
         default:
@@ -30,6 +38,9 @@ function handleFile(file: File) {
 }
 document.documentElement.addEventListener("dragover", (event) => {
     event.preventDefault()
+    if (document.documentElement.classList.contains("popup-show")) {
+        return
+    }
     event.dataTransfer!.dropEffect = "copy"
     if (document.querySelector("#droptarget")?.classList.contains("error")) {
         document.querySelector("#droptarget")?.classList.remove("error")
@@ -41,11 +52,17 @@ document.documentElement.addEventListener("dragover", (event) => {
 })
 document.documentElement.addEventListener("dragleave", (event) => {
     event.preventDefault()
+    if (document.documentElement.classList.contains("popup-show")) {
+        return
+    }
     document.querySelector("#droptarget")?.classList.remove("drophover")
     document.querySelector("#droptarget")!.innerHTML = "Drag your files here"
 })
 document.documentElement.addEventListener("drop", (event) => {
     event.preventDefault()
+    if (document.documentElement.classList.contains("popup-show")) {
+        return
+    }
     document.querySelector("#droptarget")?.classList.remove("drophover")
     document.querySelector("#droptarget")!.innerHTML = "Drag your files here"
     const file = event.dataTransfer?.files[0]
