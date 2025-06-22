@@ -18,7 +18,11 @@ function convertPNG(file: File) {
     document.querySelector("#convert-png .to-jpg")?.addEventListener("click", async () => {
         const image = await Jimp.read(objectURL)
         const outputObjURL = URL.createObjectURL(new Blob([await image.getBuffer("image/jpeg")]))
-        open(outputObjURL)
+        const a = document.createElement("a")
+        a.download = file.name.split(".png").slice(0, -1).join(".png") + ".jpg"
+        a.href = outputObjURL
+        a.click()
+        document.documentElement.classList.remove("popup-show")
     })
 }
 function handleFile(file: File) {
