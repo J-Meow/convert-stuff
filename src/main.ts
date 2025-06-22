@@ -15,17 +15,20 @@ function dropError(msg: string) {
 function convertPNG(file: File) {
     const objectURL = URL.createObjectURL(file)
     ;(document.querySelector("#convert-png .imagepreview") as HTMLImageElement).src = objectURL
-    const listener = async () => {
-        const image = await Jimp.read(objectURL)
-        const outputObjURL = URL.createObjectURL(new Blob([await image.getBuffer("image/jpeg")]))
-        const a = document.createElement("a")
-        a.download = file.name.split(".png").slice(0, -1).join(".png") + ".jpg"
-        a.href = outputObjURL
-        a.click()
-        document.documentElement.classList.remove("popup-show")
-        document.querySelector("#convert-png .to-jpg")?.removeEventListener("click", listener)
+    const listener = (className: string, mimeType: "image/bmp" | "image/tiff" | "image/x-ms-bmp" | "image/gif" | "image/jpeg" | "image/png", ext: string) => {
+        return async () => {
+            const image = await Jimp.read(objectURL)
+            const outputObjURL = URL.createObjectURL(new Blob([await image.getBuffer(mimeType)]))
+            const a = document.createElement("a")
+            a.download = file.name.split(".png").slice(0, -1).join(".png") + ext
+            a.href = outputObjURL
+            a.click()
+            document.documentElement.classList.remove("popup-show")
+            ;(document.querySelector("#convert-png ." + className) as HTMLButtonElement).onclick = null
+        }
     }
-    document.querySelector("#convert-png .to-jpg")?.addEventListener("click", listener)
+    ;(document.querySelector("#convert-png .to-jpg") as HTMLButtonElement).onclick = listener("to-jpg", "image/jpeg", ".jpg")
+    ;(document.querySelector("#convert-png .to-gif") as HTMLButtonElement).onclick = listener("to-gif", "image/gif", ".gif")
 }
 function handleFile(file: File) {
     console.log(file)
