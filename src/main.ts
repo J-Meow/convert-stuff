@@ -15,7 +15,7 @@ function dropError(msg: string) {
 function convertPNG(file: File) {
     const objectURL = URL.createObjectURL(file)
     ;(document.querySelector("#convert-png .imagepreview") as HTMLImageElement).src = objectURL
-    document.querySelector("#convert-png .to-jpg")?.addEventListener("click", async () => {
+    const listener = async () => {
         const image = await Jimp.read(objectURL)
         const outputObjURL = URL.createObjectURL(new Blob([await image.getBuffer("image/jpeg")]))
         const a = document.createElement("a")
@@ -23,7 +23,9 @@ function convertPNG(file: File) {
         a.href = outputObjURL
         a.click()
         document.documentElement.classList.remove("popup-show")
-    })
+        document.querySelector("#convert-png .to-jpg")?.removeEventListener("click", listener)
+    }
+    document.querySelector("#convert-png .to-jpg")?.addEventListener("click", listener)
 }
 function handleFile(file: File) {
     console.log(file)
