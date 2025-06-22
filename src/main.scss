@@ -79,6 +79,26 @@ html.popup-show {
     border-top-right-radius: 20px;
     padding: 20px;
     transition: opacity ease-out 0.3s, transform ease-out 0.3s;
+    .conversions {
+        display: flex;
+        flex-direction: row;
+        overflow: hidden;
+        border-radius: 999999px;
+        border: 1px solid black;
+        width: max-content;
+        button {
+            background: #0000;
+            color: black;
+            border: none;
+            cursor: pointer;
+            font: inherit;
+            padding: 8px;
+            margin: 0;
+            &:hover {
+                background: #0002;
+            }
+        }
+    }
 }
 header,
 main,
