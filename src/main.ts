@@ -29,6 +29,8 @@ function convertPNG(file: File) {
     }
     ;(document.querySelector("#convert-png .to-jpg") as HTMLButtonElement).onclick = listener("to-jpg", "image/jpeg", ".jpg")
     ;(document.querySelector("#convert-png .to-gif") as HTMLButtonElement).onclick = listener("to-gif", "image/gif", ".gif")
+    ;(document.querySelector("#convert-png .to-tiff") as HTMLButtonElement).onclick = listener("to-tiff", "image/tiff", ".tiff")
+    ;(document.querySelector("#convert-png .to-bmp") as HTMLButtonElement).onclick = listener("to-bmp", "image/bmp", ".bmp")
 }
 function handleFile(file: File) {
     console.log(file)
