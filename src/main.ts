@@ -12,27 +12,41 @@ function dropError(msg: string) {
         }
     }, 1000)
 }
-function convertPNG(file: File) {
-    const objectURL = URL.createObjectURL(file)
-    ;(document.querySelector("#convert-png .imagepreview") as HTMLImageElement).src = objectURL
-    const listener = (className: string, mimeType: "image/bmp" | "image/tiff" | "image/x-ms-bmp" | "image/gif" | "image/jpeg" | "image/png", ext: string) => {
+const imageConvertListener = (objectURL: string, name: string, startingExt: string) => {
+    return (mimeType: "image/bmp" | "image/tiff" | "image/x-ms-bmp" | "image/gif" | "image/jpeg" | "image/png", ext: string) => {
         return async () => {
             const image = await Jimp.read(objectURL)
             const outputObjURL = URL.createObjectURL(new Blob([await image.getBuffer(mimeType)]))
             const a = document.createElement("a")
-            a.download = file.name.split(".png").slice(0, -1).join(".png") + ext
+            a.download = name.split(startingExt).slice(0, -1).join(startingExt) + ext
             a.href = outputObjURL
             a.click()
             document.documentElement.classList.remove("popup-show")
-            ;(document.querySelector("#convert-png ." + className) as HTMLButtonElement).onclick = null
         }
     }
-    ;(document.querySelector("#convert-png .to-jpg") as HTMLButtonElement).onclick = listener("to-jpg", "image/jpeg", ".jpg")
-    ;(document.querySelector("#convert-png .to-gif") as HTMLButtonElement).onclick = listener("to-gif", "image/gif", ".gif")
-    ;(document.querySelector("#convert-png .to-tiff") as HTMLButtonElement).onclick = listener("to-tiff", "image/tiff", ".tiff")
-    ;(document.querySelector("#convert-png .to-bmp") as HTMLButtonElement).onclick = listener("to-bmp", "image/bmp", ".bmp")
+}
+function convertPNG(file: File) {
+    const objectURL = URL.createObjectURL(file)
+    document.querySelector("#convert-png")?.removeAttribute("hidden")
+    const pngConvertListener = imageConvertListener(objectURL, file.name, ".png")
+    ;(document.querySelector("#convert-png .imagepreview") as HTMLImageElement).src = objectURL
+    ;(document.querySelector("#convert-png .to-jpg") as HTMLButtonElement).onclick = pngConvertListener("image/jpeg", ".jpg")
+    ;(document.querySelector("#convert-png .to-gif") as HTMLButtonElement).onclick = pngConvertListener("image/gif", ".gif")
+    ;(document.querySelector("#convert-png .to-tiff") as HTMLButtonElement).onclick = pngConvertListener("image/tiff", ".tiff")
+    ;(document.querySelector("#convert-png .to-bmp") as HTMLButtonElement).onclick = pngConvertListener("image/bmp", ".bmp")
+}
+function convertJPG(file: File) {
+    const objectURL = URL.createObjectURL(file)
+    document.querySelector("#convert-jpg")?.removeAttribute("hidden")
+    const pngConvertListener = imageConvertListener(objectURL, file.name, file.name.endsWith(".jpeg") ? ".jpeg" : ".jpg")
+    ;(document.querySelector("#convert-jpg .imagepreview") as HTMLImageElement).src = objectURL
+    ;(document.querySelector("#convert-jpg .to-png") as HTMLButtonElement).onclick = pngConvertListener("image/png", ".png")
+    ;(document.querySelector("#convert-jpg .to-gif") as HTMLButtonElement).onclick = pngConvertListener("image/gif", ".gif")
+    ;(document.querySelector("#convert-jpg .to-tiff") as HTMLButtonElement).onclick = pngConvertListener("image/tiff", ".tiff")
+    ;(document.querySelector("#convert-jpg .to-bmp") as HTMLButtonElement).onclick = pngConvertListener("image/bmp", ".bmp")
 }
 function handleFile(file: File) {
+    document.querySelectorAll(".ext-specific").forEach((x) => x.setAttribute("hidden", "true"))
     console.log(file)
     const extension = file.name.split(".").pop()!
     if (!extension) {
@@ -44,6 +58,11 @@ function handleFile(file: File) {
     }
     const mimeType = file.type
     switch (mimeType + "_" + extension) {
+        case "image/jpeg_jpg":
+        case "image/jpeg_jpeg":
+            validFile()
+            convertJPG(file)
+            break
         case "image/png_png":
             validFile()
             convertPNG(file)
