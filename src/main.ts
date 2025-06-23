@@ -12,13 +12,13 @@ function dropError(msg: string) {
         }
     }, 1000)
 }
-const imageConvertListener = (objectURL: string, name: string, startingExt: string) => {
+const imageConvertListener = (objectURL: string, name: string) => {
     return (mimeType: "image/bmp" | "image/tiff" | "image/x-ms-bmp" | "image/gif" | "image/jpeg" | "image/png", ext: string) => {
         return async () => {
             const image = await Jimp.read(objectURL)
             const outputObjURL = URL.createObjectURL(new Blob([await image.getBuffer(mimeType)]))
             const a = document.createElement("a")
-            a.download = name.split(startingExt).slice(0, -1).join(startingExt) + ext
+            a.download = name.split(".").slice(0, -1).join(".") + ext
             a.href = outputObjURL
             a.click()
             document.documentElement.classList.remove("popup-show")
@@ -28,7 +28,7 @@ const imageConvertListener = (objectURL: string, name: string, startingExt: stri
 function convertPNG(file: File) {
     const objectURL = URL.createObjectURL(file)
     document.querySelector("#convert-png")?.removeAttribute("hidden")
-    const pngConvertListener = imageConvertListener(objectURL, file.name, ".png")
+    const pngConvertListener = imageConvertListener(objectURL, file.name)
     ;(document.querySelector("#convert-png .imagepreview") as HTMLImageElement).src = objectURL
     ;(document.querySelector("#convert-png .to-jpg") as HTMLButtonElement).onclick = pngConvertListener("image/jpeg", ".jpg")
     ;(document.querySelector("#convert-png .to-gif") as HTMLButtonElement).onclick = pngConvertListener("image/gif", ".gif")
@@ -38,7 +38,7 @@ function convertPNG(file: File) {
 function convertJPG(file: File) {
     const objectURL = URL.createObjectURL(file)
     document.querySelector("#convert-jpg")?.removeAttribute("hidden")
-    const pngConvertListener = imageConvertListener(objectURL, file.name, file.name.endsWith(".jpeg") ? ".jpeg" : ".jpg")
+    const pngConvertListener = imageConvertListener(objectURL, file.name)
     ;(document.querySelector("#convert-jpg .imagepreview") as HTMLImageElement).src = objectURL
     ;(document.querySelector("#convert-jpg .to-png") as HTMLButtonElement).onclick = pngConvertListener("image/png", ".png")
     ;(document.querySelector("#convert-jpg .to-gif") as HTMLButtonElement).onclick = pngConvertListener("image/gif", ".gif")
@@ -48,7 +48,7 @@ function convertJPG(file: File) {
 function handleFile(file: File) {
     document.querySelectorAll(".ext-specific").forEach((x) => x.setAttribute("hidden", "true"))
     console.log(file)
-    const extension = file.name.split(".").pop()!
+    const extension = file.name.split(".").pop()!.toLowerCase()
     if (!extension) {
         dropError("Unsupported file type")
     }
