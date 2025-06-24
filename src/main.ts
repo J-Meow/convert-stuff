@@ -94,7 +94,7 @@ function handleFile(file: File) {
         case "image/tiff_tif":
         case "image/tiff_tiff":
             validFile()
-            convertGIF(file)
+            convertTIFF(file)
             break
         default:
             dropError("Unsupported file type")
