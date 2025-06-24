@@ -28,32 +28,32 @@ const imageConvertListener = (objectURL: string, name: string) => {
 function convertPNG(file: File) {
     const objectURL = URL.createObjectURL(file)
     document.querySelector("#convert-png")?.removeAttribute("hidden")
-    const pngConvertListener = imageConvertListener(objectURL, file.name)
+    const convertListener = imageConvertListener(objectURL, file.name)
     ;(document.querySelector("#convert-png .imagepreview") as HTMLImageElement).src = objectURL
-    ;(document.querySelector("#convert-png .to-jpg") as HTMLButtonElement).onclick = pngConvertListener("image/jpeg", ".jpg")
-    ;(document.querySelector("#convert-png .to-gif") as HTMLButtonElement).onclick = pngConvertListener("image/gif", ".gif")
-    ;(document.querySelector("#convert-png .to-tiff") as HTMLButtonElement).onclick = pngConvertListener("image/tiff", ".tiff")
-    ;(document.querySelector("#convert-png .to-bmp") as HTMLButtonElement).onclick = pngConvertListener("image/bmp", ".bmp")
+    ;(document.querySelector("#convert-png .to-jpg") as HTMLButtonElement).onclick = convertListener("image/jpeg", ".jpg")
+    ;(document.querySelector("#convert-png .to-gif") as HTMLButtonElement).onclick = convertListener("image/gif", ".gif")
+    ;(document.querySelector("#convert-png .to-tiff") as HTMLButtonElement).onclick = convertListener("image/tiff", ".tiff")
+    ;(document.querySelector("#convert-png .to-bmp") as HTMLButtonElement).onclick = convertListener("image/bmp", ".bmp")
 }
 function convertJPG(file: File) {
     const objectURL = URL.createObjectURL(file)
     document.querySelector("#convert-jpg")?.removeAttribute("hidden")
-    const pngConvertListener = imageConvertListener(objectURL, file.name)
+    const convertListener = imageConvertListener(objectURL, file.name)
     ;(document.querySelector("#convert-jpg .imagepreview") as HTMLImageElement).src = objectURL
-    ;(document.querySelector("#convert-jpg .to-png") as HTMLButtonElement).onclick = pngConvertListener("image/png", ".png")
-    ;(document.querySelector("#convert-jpg .to-gif") as HTMLButtonElement).onclick = pngConvertListener("image/gif", ".gif")
-    ;(document.querySelector("#convert-jpg .to-tiff") as HTMLButtonElement).onclick = pngConvertListener("image/tiff", ".tiff")
-    ;(document.querySelector("#convert-jpg .to-bmp") as HTMLButtonElement).onclick = pngConvertListener("image/bmp", ".bmp")
+    ;(document.querySelector("#convert-jpg .to-png") as HTMLButtonElement).onclick = convertListener("image/png", ".png")
+    ;(document.querySelector("#convert-jpg .to-gif") as HTMLButtonElement).onclick = convertListener("image/gif", ".gif")
+    ;(document.querySelector("#convert-jpg .to-tiff") as HTMLButtonElement).onclick = convertListener("image/tiff", ".tiff")
+    ;(document.querySelector("#convert-jpg .to-bmp") as HTMLButtonElement).onclick = convertListener("image/bmp", ".bmp")
 }
 function convertGIF(file: File) {
     const objectURL = URL.createObjectURL(file)
     document.querySelector("#convert-gif")?.removeAttribute("hidden")
-    const gifConvertListener = imageConvertListener(objectURL, file.name)
+    const convertListener = imageConvertListener(objectURL, file.name)
     ;(document.querySelector("#convert-gif .imagepreview") as HTMLImageElement).src = objectURL
-    ;(document.querySelector("#convert-gif .to-png") as HTMLButtonElement).onclick = gifConvertListener("image/png", ".png")
-    ;(document.querySelector("#convert-gif .to-jpg") as HTMLButtonElement).onclick = gifConvertListener("image/jpeg", ".jpg")
-    ;(document.querySelector("#convert-gif .to-tiff") as HTMLButtonElement).onclick = gifConvertListener("image/tiff", ".tiff")
-    ;(document.querySelector("#convert-gif .to-bmp") as HTMLButtonElement).onclick = gifConvertListener("image/bmp", ".bmp")
+    ;(document.querySelector("#convert-gif .to-png") as HTMLButtonElement).onclick = convertListener("image/png", ".png")
+    ;(document.querySelector("#convert-gif .to-jpg") as HTMLButtonElement).onclick = convertListener("image/jpeg", ".jpg")
+    ;(document.querySelector("#convert-gif .to-tiff") as HTMLButtonElement).onclick = convertListener("image/tiff", ".tiff")
+    ;(document.querySelector("#convert-gif .to-bmp") as HTMLButtonElement).onclick = convertListener("image/bmp", ".bmp")
 }
 function handleFile(file: File) {
     document.querySelectorAll(".ext-specific").forEach((x) => x.setAttribute("hidden", "true"))
