@@ -55,6 +55,16 @@ function convertGIF(file: File) {
     ;(document.querySelector("#convert-gif .to-tiff") as HTMLButtonElement).onclick = convertListener("image/tiff", ".tiff")
     ;(document.querySelector("#convert-gif .to-bmp") as HTMLButtonElement).onclick = convertListener("image/bmp", ".bmp")
 }
+function convertTIFF(file: File) {
+    const objectURL = URL.createObjectURL(file)
+    document.querySelector("#convert-tiff")?.removeAttribute("hidden")
+    const convertListener = imageConvertListener(objectURL, file.name)
+    ;(document.querySelector("#convert-tiff .imagepreview") as HTMLImageElement).src = objectURL
+    ;(document.querySelector("#convert-tiff .to-png") as HTMLButtonElement).onclick = convertListener("image/png", ".png")
+    ;(document.querySelector("#convert-tiff .to-jpg") as HTMLButtonElement).onclick = convertListener("image/jpeg", ".jpg")
+    ;(document.querySelector("#convert-tiff .to-gif") as HTMLButtonElement).onclick = convertListener("image/gif", ".gif")
+    ;(document.querySelector("#convert-tiff .to-bmp") as HTMLButtonElement).onclick = convertListener("image/bmp", ".bmp")
+}
 function handleFile(file: File) {
     document.querySelectorAll(".ext-specific").forEach((x) => x.setAttribute("hidden", "true"))
     console.log(file)
@@ -81,7 +91,11 @@ function handleFile(file: File) {
             validFile()
             convertGIF(file)
             break
-
+        case "image/tiff_tif":
+        case "image/tiff_tiff":
+            validFile()
+            convertGIF(file)
+            break
         default:
             dropError("Unsupported file type")
             break
