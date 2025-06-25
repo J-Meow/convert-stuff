@@ -2,13 +2,13 @@ import "./main.scss"
 import { Jimp } from "jimp"
 
 function dropError(msg: string) {
-    document.querySelector("#droptarget")!.innerHTML = msg
+    document.querySelector("#droptarget div")!.innerHTML = msg
     document.querySelector("#droptarget")!.classList.add("error")
     console.error(msg)
     setTimeout(() => {
         if (document.querySelector("#droptarget")?.classList.contains("error")) {
             document.querySelector("#droptarget")?.classList.remove("error")
-            document.querySelector("#droptarget")!.innerHTML = "Drag your files here"
+            document.querySelector("#droptarget div")!.innerHTML = "Drag your files here <br />or click to upload"
         }
     }, 1000)
 }
@@ -112,7 +112,7 @@ document.documentElement.addEventListener("dragover", (event) => {
     }
     if (!document.querySelector("#droptarget")?.classList.contains("drophover")) {
         document.querySelector("#droptarget")?.classList.add("drophover")
-        document.querySelector("#droptarget")!.innerHTML = "Drop it!"
+        document.querySelector("#droptarget div")!.innerHTML = "Drop it!"
     }
 })
 document.documentElement.addEventListener("dragleave", (event) => {
@@ -121,7 +121,7 @@ document.documentElement.addEventListener("dragleave", (event) => {
         return
     }
     document.querySelector("#droptarget")?.classList.remove("drophover")
-    document.querySelector("#droptarget")!.innerHTML = "Drag your files here"
+    document.querySelector("#droptarget div")!.innerHTML = "Drag your files here <br />or click to upload"
 })
 document.documentElement.addEventListener("drop", (event) => {
     event.preventDefault()
@@ -129,8 +129,15 @@ document.documentElement.addEventListener("drop", (event) => {
         return
     }
     document.querySelector("#droptarget")?.classList.remove("drophover")
-    document.querySelector("#droptarget")!.innerHTML = "Drag your files here"
+    document.querySelector("#droptarget div")!.innerHTML = "Drag your files here <br />or click to upload"
     const file = event.dataTransfer?.files[0]
     if (!file) return
     handleFile(file)
+})
+;(document.querySelector("#fileinput") as HTMLInputElement).addEventListener("change", () => {
+    const fileInput = document.querySelector("#fileinput") as HTMLInputElement
+    const file = fileInput.files?.item(0)
+    if (file) {
+        handleFile(file)
+    }
 })

@@ -11,7 +11,11 @@ body {
 header {
     text-align: center;
 }
+#fileinput {
+    display: none;
+}
 main {
+    cursor: alias;
     height: 60vh;
     display: flex;
     span {
@@ -19,7 +23,10 @@ main {
         width: 30vh;
         height: 30vh;
         border-radius: 100%;
-        line-height: 30vh;
+        display: flex;
+        div {
+            margin: auto;
+        }
         text-align: center;
         border: 2px dashed black;
         &.drophover {
